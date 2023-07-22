@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset=”UTF-8”>
+        <link rel="icon" href="{{ url_for('static', filename='snake_logo.png') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>Herpeto.ai</title>
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="logo_container">
+                <a href="#"><img src="{{ url_for('static', filename='snake_logo.png') }}" alt="Logo"></a>
+                <a href="#" class="logo">Herpeto.ai</a>
+
+            </div>
+           
+           
+            
+            <nav class="navbar">
+               <a href="#">Species</a> 
+               <a href="#">About</a> 
+               <a href="#">Contact</a> 
+            </nav>
+        </header>
+
+        <div class="upload-image-section">
+            <h1>Upload your snake image!</h1>
+
+            <form class="form_horizontal" action="/predict" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pwd">upload your image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" placeholder="aww" name="my_image"  id="pwd">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-succes">Submit</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+            {% if percentage %}
+                <div class="img-display">
+                   
+                    <img src="{{ url_for('static', filename=img_path) }}" alt="Uploaded Imagdsadsae" width="20%" height="auto">
+
+                    
+                    <h2>Prediction:</h2>
+                    <p>{{label}} {{maxx}} %</p>
+
+                    
+                </div>
+    {% endif %}
+
+            
+
+
+        </div>
+
+    </body>
+
