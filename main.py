@@ -1,21 +1,15 @@
 from flask import Flask,render_template,request
-from flask_wtf import FlaskForm
-from wtforms import FileField,SubmitField
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import os
-from werkzeug.utils import secure_filename
 
-
-
-upload_folder=r'C:\Users\Ryan\Documents\learnpython\main\flaskweb\static\upload\\'
-model=load_model(r'C:\Users\Ryan\Documents\learnpython\main\flaskweb\model.h5')
-
+base_directory = os.path.dirname(os.path.abspath(__file__))
+upload_folder=os.path.join(base_directory, 'static', 'upload')
+model=load_model(os.path.join(base_directory, 'model.h5'))
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='supersecretkey'
-
     
 def predict_label(pathh):
      labels=['Trimeresurus albolabris','Naja Sputatrix','Reticulatus Python']
@@ -28,13 +22,8 @@ def predict_label(pathh):
      maxx=np.max(prediction)
      percentage=str(int(maxx*100))
      label=labels[argmaks]
-    
      
      return label,percentage,int(maxx*100)
-     
-     
-     
-
 
 @app.route("/",methods=['GET','POST'])
 def home():
@@ -44,17 +33,10 @@ def home():
 def hello_world():
     if  request.method== 'POST':
         img=request.files['my_image']
-        
         img_path=upload_folder+img.filename
-        
         img.save(img_path)
         filename=f'upload/{img.filename}'
-        
         label,percentage,maxx=predict_label(img_path)
-        
-       
-        
-         
         
     return render_template('home.html',label=label,percentage=percentage,maxx=maxx,img_path=filename)
 
